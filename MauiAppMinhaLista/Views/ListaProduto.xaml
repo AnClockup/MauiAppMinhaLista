@@ -24,6 +24,18 @@
         <SearchBar x:Name="txt_search"
                    Placeholder="Busca de Produtos"
                    TextChanged="txt_search_TextChanged" />
+
+        <Picker x:Name="categoriaPicker" Title="Selecione a Categoria" 
+                SelectedIndexChanged="categoriaPicker_SelectedIndexChanged">
+            <Picker.Items>
+                <x:String>Todos</x:String>
+                <x:String>Alimentos</x:String>
+                <x:String>Higiene</x:String>
+                <x:String>Limpeza</x:String>
+            </Picker.Items>
+        </Picker>
+        <Button Text="Gerar Relatório" Clicked="GerarRelatorio_Clicked" />
+
         <ListView x:Name="lst_produtos">
             <ListView.Header>
                 <Grid ColumnDefinitions="*, *, *, *, *, *">
@@ -52,4 +64,8 @@
             </ListView.ItemTemplate>
         </ListView>
     </VerticalStackLayout>
+
+    
+            
+
 </ContentPage>

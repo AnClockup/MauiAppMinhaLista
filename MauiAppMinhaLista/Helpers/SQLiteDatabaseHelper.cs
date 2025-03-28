@@ -43,6 +43,17 @@ namespace MauiAppMinhaLista.Helpers
 
             return _conn.QueryAsync<Produto>(sql);
         }
+        public async Task<List<(string Categoria, double TotalGasto)>> 
+            GetRelatorioPorCategoria()
+        {
+            return await _conn.QueryAsync<(string Categoria, double TotalGasto)>(@"
+        SELECT Categoria, SUM(Preco * Quantidade) AS TotalGasto
+        FROM Produto
+        GROUP BY Categoria
+    ");
+        }
+
     }
 
+   
 }

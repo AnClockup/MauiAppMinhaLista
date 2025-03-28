@@ -1,5 +1,6 @@
 using MauiAppMinhaLista.Models;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace MauiAppMinhaLista.Views;
 
@@ -73,5 +74,29 @@ public partial class ListaProduto : ContentPage
         {
             await DisplayAlert("Ops", ex.Message, "OK");
         }
+    }
+
+    private async void categoriaPicker_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        string selectedCategory = categoriaPicker.SelectedItem?.ToString();
+        if (selectedCategory == "Todos")
+        {
+            lst_produtos.ItemsSource = lista;
+        }
+        else
+        {
+            lst_produtos.ItemsSource = lista.Where(p => p.Categoria == selectedCategory).ToList();
+        }
+    }
+
+    private async void GerarRelatorio_Clicked(object sender, EventArgs e)
+    {
+        var relatorio = await App.Db.GetRelatorioPorCategoria();
+        string mensagemRelatorio = "";
+        foreach (var item in relatorio)
+        {
+            mensagemRelatorio += $"{item.Categoria}: {item.TotalGasto:C}\n";
+        }
+        await DisplayAlert("Relatório de Gastos por Categoria", mensagemRelatorio, "OK");
     }
 }
